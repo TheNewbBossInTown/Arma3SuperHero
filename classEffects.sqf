@@ -1,3 +1,5 @@
+// classEffects.sqf
+
 // Function to remove all class effects
 removeClassEffects = {
     player allowDamage true; // Remove invincibility

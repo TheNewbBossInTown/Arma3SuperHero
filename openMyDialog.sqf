@@ -1,0 +1,3 @@
+// openMyDialog.sqf
+
+createDialog "MyDialog";

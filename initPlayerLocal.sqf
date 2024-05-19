@@ -2,22 +2,66 @@
 
 // The rest of your code...
 
-// Add the Respawn event handler to the player
-player addEventHandler ["Respawn", {
-    // _newUnit is the new player unit after respawn
-    params ["_newUnit"];
+// Function to add actions to the player
+[player] spawn {
+    params ["_unit"];
 
     // Wait for 10 seconds
     sleep 10;
 
     // Set canUseAbility to true initially
-    _newUnit setVariable ["canUseAbility", true];
+    _unit setVariable ["canUseAbility", true];
 
     // Add the action if canUseAbility is true
-    _newUnit setVariable ["currentActionId", _newUnit addAction ["Activate Ability", {if ((_newUnit getVariable "canUseAbility") == true) then {call (_newUnit getVariable "currentMainAbility"); _newUnit setVariable ["canUseAbility", false];}}, [], 57, false, true, "", ""]];
+    if ((_unit getVariable "canUseAbility") == true) then {
+        _unit setVariable ["currentActionId", _unit addAction ["Activate Ability", {
+            if ((_this select 0) getVariable "canUseAbility") then {
+                call ((_this select 0) getVariable "currentMainAbility");
+                (_this select 0) setVariable ["canUseAbility", false];
+            };
+        }, [], 57, false, true, "", ""]];
+    };
 
     // Add an action to the new unit that opens the dialog when the user presses the "User Action 1" key
-    _newUnit addAction ["Open Dialog", {
-        call openMyDialog;
+    _unit addAction ["Open Dialog", {
+        [] execVM "openMyDialog.sqf";
     }];
+
+    // Show the hint after the actions are added
+    hint "Hero Menu Activated";
+};
+
+// Add the Respawn event handler to the player
+player addEventHandler ["Respawn", {
+    // _newUnit is the new player unit after respawn
+    params ["_newUnit"];
+
+    // Call the function to add actions to the player
+    [_newUnit] spawn {
+        params ["_unit"];
+
+        // Wait for 10 seconds
+        sleep 10;
+
+        // Set canUseAbility to true initially
+        _unit setVariable ["canUseAbility", true];
+
+        // Add the action if canUseAbility is true
+        if ((_unit getVariable "canUseAbility") == true) then {
+            _unit setVariable ["currentActionId", _unit addAction ["Activate Ability", {
+                if ((_this select 0) getVariable "canUseAbility") then {
+                    call ((_this select 0) getVariable "currentMainAbility");
+                    (_this select 0) setVariable ["canUseAbility", false];
+                };
+            }, [], 57, false, true, "", ""]];
+        };
+
+        // Add an action to the new unit that opens the dialog when the user presses the "User Action 1" key
+        _unit addAction ["Open Dialog", {
+            [] execVM "openMyDialog.sqf";
+        }];
+
+        // Show the hint after the actions are added
+        hint "Hero Menu Activated";
+    };
 }];

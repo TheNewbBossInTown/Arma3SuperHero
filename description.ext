@@ -1,0 +1,48 @@
+// Function to open the dialog
+openMyDialog = {
+    createDialog "MyDialog";
+};
+
+class MyDialog {
+    idd = -1; // Dialog ID
+    movingEnable = true; // Enable moving of the dialog
+
+    // Define controls in the dialog
+    class controls {
+        // Superman button
+        class SupermanButton: RscButton {
+            idc = 1;
+            text = "Superman";
+            x = 0.4; y = 0.2;
+            w = 0.2; h = 0.1;
+            action = "closeDialog 0; call removeClassEffects; player setVariable ['currentAbility', supermanAbilities, true]; player setVariable ['currentMainAbility', supermanMainAbility, true];";
+        };
+
+        // Batman button
+        class BatmanButton: RscButton {
+            idc = 2;
+            text = "Batman";
+            x = 0.4; y = 0.4;
+            w = 0.2; h = 0.1;
+            action = "closeDialog 0; call removeClassEffects; player setVariable ['currentAbility', batmanAbilities, true]; player setVariable ['currentMainAbility', batmanMainAbility, true];";
+        };
+
+        // Spiderman button
+        class SpidermanButton: RscButton {
+            idc = 3;
+            text = "Spiderman";
+            x = 0.4; y = 0.6;
+            w = 0.2; h = 0.1;
+            action = "closeDialog 0; call removeClassEffects; player setVariable ['currentAbility', spidermanAbilities, true]; player setVariable ['currentMainAbility', spidermanMainAbility, true];";
+        };
+
+        // IronMan button
+        class IronManButton: RscButton {
+            idc = 4;
+            text = "IronMan";
+            x = 0.4; y = 0.8;
+            w = 0.2; h = 0.1;
+            action = "closeDialog 0; call removeClassEffects; player setVariable ['currentAbility', ironManAbilities, true]; player setVariable ['currentMainAbility', ironManMainAbility, true];";
+        };
+    };
+};
